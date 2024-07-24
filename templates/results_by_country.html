@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Eurovision Results by Country
+{% endblock %}
+
+{% block main %}
+    <!-- Card layout taken from CodeWithPrince: 
+        https://github.com/Princekrampah/FlaskPlotlyProject/blob/master/application/templates/index.html
+    -->
+    <div class="row p-2">
+        <div class="card m-auto">
+            <div class="card-body">
+            <p class="card-text" id="country_summary">
+                {% if (selection == "Andorra") %}
+                    Andorra has never competed in a grand final.
+                {% else %}
+                    {{ selection }}'s average placement within the grand finals is {{ place_final_avg }}.</p>
+                {% endif %}
+                <form action="/results_by_country" id="country_dropdown" method="post">
+                    <select class="form-select mx-auto w-auto" id="countries" name="countries" placeholder="Country">
+                        {% for country in countries %}
+                            {% if country == selection %}
+                                <option disabled selected value="{{ selection }}">{{ selection }}</option>
+                            {% else %}
+                                <option value="{{ country }}">{{ country }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </form>
+            <div id="barplot"></div>
+        </div>
+    </div>
+    <script>
+        var barplot = {{ countryJSON | safe }};
+        Plotly.plot("barplot",barplot,{});
+    </script>
+{% endblock %}

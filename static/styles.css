@@ -1,0 +1,13 @@
+#author {
+    font-weight: bold;
+}
+
+#github {
+    background-color: #24292f;
+    border-radius: 8px;
+    padding: 2px;
+}
+
+#github img {
+    height: 25px;
+}

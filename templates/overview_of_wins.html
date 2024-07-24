@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Eurovision Overview of Wins
+{% endblock %}
+
+{% block main %}
+    <!-- Card layout taken from CodeWithPrince: 
+        https://github.com/Princekrampah/FlaskPlotlyProject/blob/master/application/templates/index.html
+    -->
+    <div class="row p-2">
+        <div class="card m-auto">
+            <div class="card-body">
+            <p class="card-text" id="highest_num_wins">Both Iceland and Sweden have the highest number of contest wins - each having won 7 times.</p>
+            <div id="histogram"></div>
+        </div>
+    </div>
+    <script>
+        var hist = {{ winnersJSON | safe }};
+        Plotly.plot("histogram",hist,{});
+    </script>
+{% endblock %}

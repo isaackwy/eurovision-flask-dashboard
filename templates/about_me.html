@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    About Me
+{% endblock %}
+
+{% block main %}
+    <p class="body_text" id="author">
+        Author: Isaac Yu
+    </p>
+    <p class="body_text" id="about_text_p1">
+        I am current working part-time as an administrative assistant at a non-profit.
+        <br>I am preparing to transition into a full-time data analyst career.
+    </p>
+    <p class="body_text" id="about_text_p2">
+        This dashboard displays the number of times each country has won Eurovision.
+        <br>It also displays Eurovision Grand Final contest placements by country.
+        <br>However, it does not display semi-final contest results.
+    </p>
+    <div class="social_media">
+        My portfolio is available on <a id="github" href="https://github.com/isaackwy" target="_blank" rel="noopener noreferrer" class="btn">
+            <img alt="Icon" id="git_icon" src="{{url_for('static', filename='github-mark-white.png')}}">
+            <img alt="GitHub" id="git_logo" src="{{url_for('static', filename='Github_Logo_White.png')}}">
+        </a>
+    </div>
+{% endblock %}
