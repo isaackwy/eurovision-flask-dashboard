@@ -34,8 +34,8 @@ def overview_of_wins():
         .dropna() \
         .sort_values()
     
-    # Plot histogram of winners (with x-axis labeled as "Country")
-    winners_hist = px.histogram(winners,
+    # Plot barplot of winners (with x-axis labeled as "Country")
+    winners_barplot = px.histogram(winners,
                                 x='to_country',
                                 labels = {
                                     'to_country': "Country",
@@ -43,20 +43,20 @@ def overview_of_wins():
                                 title="Eurovision Wins by Country")
     
     # Centre the title
-    winners_hist.update_layout(title_x = 0.5)
+    winners_barplot.update_layout(title_x = 0.5)
     
     # Label y-axis as "Number of wins"
-    winners_hist.update_layout(yaxis_title="Number of Wins")
+    winners_barplot.update_layout(yaxis_title="Number of Wins")
     
     # Change hover labels
-    winners_hist.update_traces(hovertemplate = "<b>Country: </b> %{x} <br>" +
-                                               "<b>Number of wins: </b> %{y}")
+    winners_barplot.update_traces(hovertemplate = "<b>Country: </b> %{x} <br>" +
+                                                  "<b>Number of wins: </b> %{y}")
     
-    # Increase the height of the histogram
-    winners_hist.update_layout(height=700)
+    # Increase the height of the barplot
+    winners_barplot.update_layout(height=700)
     
-    # Display the histogram in the Flask app
-    winnersJSON = json.dumps(winners_hist, cls=plotly.utils.PlotlyJSONEncoder)
+    # Display the barplot in the Flask app
+    winnersJSON = json.dumps(winners_barplot, cls=plotly.utils.PlotlyJSONEncoder)
     return render_template("overview_of_wins.html", winnersJSON=winnersJSON)
 
 
@@ -131,8 +131,8 @@ def results_by_country():
     else:
         place_final_avg = np.nan
     
-    # Plot histogram of results by country
-    country_hist = px.bar(country_finals,
+    # Plot barplot of results by country
+    country_barplot = px.bar(country_finals,
                           x = country_finals.index,
                           y = 'place_final_inverted',
                           labels = {
@@ -142,12 +142,12 @@ def results_by_country():
                           title = "Grand Final Results Over the Years")
     
     # Centre the title
-    country_hist.update_layout(title_x = 0.5)
+    country_barplot.update_layout(title_x = 0.5)
     
     # Change hover labels
-    country_hist.update_traces(customdata = country_finals['place_final'],
-                               hovertemplate = "<b>Year: </b> %{x} <br>" +
-                                               "<b>Place: </b> %{customdata}")
+    country_barplot.update_traces(customdata = country_finals['place_final'],
+                                  hovertemplate = "<b>Year: </b> %{x} <br>" +
+                                                  "<b>Place: </b> %{customdata}")
 
     # If country is not Andorra:
     # Get the lowest and highest places a country received
@@ -161,14 +161,14 @@ def results_by_country():
         # 2 if the difference between the highest and lowest places is less than 13
         # Otherwise, set tick intervals to 5
         tick_intervals = 1 if (highest_place - lowest_place >= -5) else 2 if (highest_place - lowest_place >= -13) else 5
-        country_hist.update_yaxes(tickvals = list(range(lowest_place, 0, -tick_intervals)),
+        country_barplot.update_yaxes(tickvals = list(range(lowest_place, 0, -tick_intervals)),
                                   ticktext = list(range(1, lowest_place + 1, tick_intervals)))
     
         # Change x-axis ticks
         earliest_year = int(country_finals.index.min())
         most_recent_year = int(country_finals.index.max())
         if (most_recent_year - earliest_year <= 5):
-            country_hist.update_xaxes(tickvals = list(range(earliest_year, most_recent_year + 1, 1)))
+            country_barplot.update_xaxes(tickvals = list(range(earliest_year, most_recent_year + 1, 1)))
             
         # Increase the length of the average line (its beginning and endpoint)
         # If the country is San Marino or Slovakia, increase that length by a greater amount
@@ -180,7 +180,7 @@ def results_by_country():
             x1 = country_finals.index.max() + 0.5
             
         # Add average line
-        country_hist.add_trace(
+        country_barplot.add_trace(
             go.Scatter(
                 x = [x0, x1],
                 y = [place_final_avg_inverted, place_final_avg_inverted],
@@ -194,17 +194,17 @@ def results_by_country():
         )
         
         # Add legend title
-        country_hist.update_layout(legend_title='<b>Legend</b>')
+        country_barplot.update_layout(legend_title='<b>Legend</b>')
         
         # Do not show the country's placement (the blue bar) within the legend
-        for trace in country_hist['data']:
+        for trace in country_barplot['data']:
             if (trace['name'] == ''): trace['showlegend'] = False
 
-    # Increase the height of the histogram
-    country_hist.update_layout(height=650)
+    # Increase the height of the barplot
+    country_barplot.update_layout(height=650)
     
-    # Display the histogram in the Flask app
-    countryJSON = json.dumps(country_hist, cls=plotly.utils.PlotlyJSONEncoder)
+    # Display the barplot in the Flask app
+    countryJSON = json.dumps(country_barplot, cls=plotly.utils.PlotlyJSONEncoder)
     return render_template("results_by_country.html", countryJSON=countryJSON, countries=list_of_countries, selection=selected_country, place_final_avg=place_final_avg)
 
 

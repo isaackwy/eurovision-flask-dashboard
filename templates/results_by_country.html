@@ -28,11 +28,11 @@
                         {% endfor %}
                     </select>
                 </form>
-            <div id="barplot"></div>
+            <div id="results_barplot"></div>
         </div>
     </div>
     <script>
         var barplot = {{ countryJSON | safe }};
-        Plotly.plot("barplot",barplot,{});
+        Plotly.plot("results_barplot",barplot,{});
     </script>
 {% endblock %}
