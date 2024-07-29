@@ -23,3 +23,6 @@ $ flask run
 
 ## Project Dataset
 [Spijkervet](https://github.com/Spijkervet/) had already prepared a contestants.csv file within her [eurovision-dataset](https://github.com/Spijkervet/eurovision-dataset/) repository. However, since that file only displays contest results up to 2023, I have manually added in results from the 2024 Grand Final.
+
+## Video Showcase
+A video showcasing this project is available at the following link: https://video.everythingbagel.me/w/hqKfFGMdA2kE6awLrZTCJG
