@@ -33,6 +33,6 @@
     </div>
     <script>
         var barplot = {{ countryJSON | safe }};
-        Plotly.plot("results_barplot",barplot,{});
+        Plotly.newPlot("results_barplot",barplot,{});
     </script>
 {% endblock %}

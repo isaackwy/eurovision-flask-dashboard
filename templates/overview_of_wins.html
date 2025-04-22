@@ -17,6 +17,6 @@
     </div>
     <script>
         var barplot = {{ winnersJSON | safe }};
-        Plotly.plot("overview_barplot",barplot,{});
+        Plotly.newPlot("overview_barplot",barplot,{});
     </script>
 {% endblock %}
